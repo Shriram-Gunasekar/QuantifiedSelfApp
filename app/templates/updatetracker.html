@@ -1,0 +1,19 @@
+{% extends 'layout.html' %}
+
+{% block title %}Update Tracker Note{% endblock %}
+
+{% block content %}
+<form method="POST">
+    <div class="form-group" style="width:800px; margin:0 auto;">
+        <label for="t_note">Edited Note?</label>
+        <input type="text" class="form-control" id="t_note" name="t_note">
+    </div>
+    <div class="form-group" style="width:800px; margin:0 auto;">
+        <label for="t_name">Edited Name?</label>
+        <input type="text" class="form-control" id="t_name" name="t_name">
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+<a href="{{ url_for('views.dashboard') }}">Back to Previous Page</a>
+
+{% endblock %}

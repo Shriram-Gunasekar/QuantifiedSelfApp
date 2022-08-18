@@ -1,0 +1,97 @@
+{% extends 'layout.html' %} 
+{% block title %}Tracker Details{% endblock %}
+
+{% block content %}
+<h2> Tracker Dashboard </h2>
+<h3> Tracker : {{trackername}} </h3>
+<h4> Tracker Type : {{trackertype}} </h4>
+<h4> Tracker Note : {{trackernote}} </h4>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+          <th scope="col"> # </th>
+          <th scope="col">Tracker Value</th>
+          <th scope="col">Entry Date</th>
+          <th scope="col">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% set count = [1] %}
+        {% for i in info %}
+        <tr>
+          <td> {{count}} </td>
+          {% if trackertype == 'Boolean' %}
+             {% if i.t_value == 0 %}
+               <td>
+                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="Red" class="bi bi-x" viewBox="0 0 16 16">
+                    <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+                </svg>
+               </td>
+             {% else %}
+               <td> 
+                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="Green" class="bi bi-check" viewBox="0 0 16 16">
+                    <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/>
+                </svg> 
+                </td>
+             {% endif %}
+          {% else %}
+            <td>{{i.t_value}}</td>
+          {% endif %}
+          <td>{{i.t_date}}</td>
+          <td>
+            <a href="edit_info/{{i['id']}}" class="btn btn-success" id="t_edit">Update</a>
+            <a href="delete_info/{{i['id']}}" class="btn btn-danger" id="info_id">Delete</a>
+          </td>
+          {% if count.append(count.pop() + 1) %}{% endif %}
+        </tr>
+        {% endfor %}
+      </tbody>
+</table>
+
+<canvas id="chart" width ="900" height = "400"></canvas>
+<script>
+  var ctx = document.getElementById("chart").getContext("2d");
+  var chart = new Chart(ctx,{
+    {% if trackertype == 'Boolean' %}
+      type: 'bar',
+    {% else %}
+      type: 'line',
+    {% endif %}
+    data: {
+      labels : {{ labels | tojson }},
+      datasets :[
+        {
+          label : "My Data",
+          data : {{ values | tojson }},
+          fill : true,
+          borderColor : "rgb(75,192,192)",
+          lineTension : 0.5,
+          backgroundColour : "rgb(255,192,192)",
+          barPercentage: 0.5
+        }
+      ]
+     },
+     options :{
+      title: {
+        display: true,
+        text: 'Pie Chart Title',
+      },
+      responsive: false,
+     }
+  });
+</script>
+
+<form method="POST">
+    <div class="form-group" style="width:800px; margin:0 auto;">
+        <label for="info_value">Tracker Value</label>
+        <input type="number" class="form-control" id="info_value" name="info_value" placeholder="Tracker Value">
+        {% if trackertype == 'Boolean' %}
+        <p> Note : Tracker type is boolean. 0 is negative response and any other number is a positive response </p>
+        {% endif %}
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
+<a align='center' class="nav-item nav-link" id="new_tracker" href="{{ url_for('views.dashboard') }}">Back to Dashboard</a>
+{% endblock %}

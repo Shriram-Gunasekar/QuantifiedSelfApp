@@ -1,0 +1,14 @@
+{% extends "layout.html" %}
+
+{% block title %} Update {% endblock %}
+
+{% block content %}
+<form method="POST">
+    <div class="form-group" style="width:800px; margin:0 auto;">
+        <label for="info_value">Value</label>
+        <input type="number" class="form-control" id="info_value" name="info_value">
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+<a href="{{ url_for('views.view_tracker', tracker_id=info.t_id ) }}">Back to Previous Page</a>
+{% endblock %}

@@ -1,0 +1,40 @@
+{% extends "layout.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+
+<h1 align="center"> Welcome {{user.alias}} </h1>
+<h2> Your Current Trackers </h2>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col"> # </th>
+      <th scope="col">Tracker Name</th>
+      <th scope="col">Tracker Type</th>
+      <th scope="col">Tracker Note</th>
+      <th scope="col">Date Created</th>
+      <th scope="col">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% set count = [1] %}
+    {% for tracker in trackers %}
+    <tr>
+      <td>{{count}} </td>
+      <td>{{tracker.t_name}}</td>
+      <td>{{tracker.t_type}}</td>
+      <td>{{tracker.t_note}}</td>
+      <td>{{tracker.t_date}}</td>
+      <td>
+        <a href="view_tracker/{{tracker['id']}}" class="btn btn-success" id="t_infos">View</a>
+        <a href="update_tracker/{{tracker['id']}}" class="btn btn-success" id="t_infos">Update Note</a>
+        <a href="delete_tracker/{{tracker['id']}}" class="btn btn-danger" id="t_id">Delete</a>
+      </td>
+      {% if count.append(count.pop() + 1) %}{% endif %}
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+<a align='center' class="nav-item nav-link" id="new_tracker" href="{{ url_for('views.create_tracker') }}">New Tracker</a>
+
+<a align='center' class="nav-item nav-link" id="logout" href="{{ url_for('sign.logout') }}">Logout</a>
+{% endblock %}
