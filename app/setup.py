@@ -2,7 +2,7 @@
 
 def config(app):
     from . import db
-    app.config['SECRET_KEY'] = 'poiuytrewqmnbvcxz'
+    app.config['SECRET_KEY'] = 'dummysecretkeyfordemo'
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///tracker.db'
     app.config['CSRF_ENABLED'] = True
     app.config['PREFERRED_URL_SCHEME'] = 'https'

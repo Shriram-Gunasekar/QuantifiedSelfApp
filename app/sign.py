@@ -14,6 +14,7 @@ def login():
     Login Template Consists of Simple Form
     
     '''
+    print(request.form)
     if request.method == 'POST':
         username = request.form.get('username')
         password = request.form.get('password')
