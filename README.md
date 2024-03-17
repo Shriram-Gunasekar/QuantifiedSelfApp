@@ -8,6 +8,6 @@ Run it using 'pip install -r requirements.txt' command in the terminal
 
 ### Run the App by running the main.py file in the root directory of the project
 
-Refer to project report pdf file for schema and other details.
+Refer to project report pdf file for schema and other details. Uses Flask backend & Sqlite3
 
 ### Link on which app is being served will appear in the terminal 
